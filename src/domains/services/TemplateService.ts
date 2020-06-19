@@ -1,18 +1,20 @@
 import { getTemplateFS } from "../repository/TemplatesRepository";
 import { compileTemplateFromClient } from "./templateParser/TemplateParserClient";
-import { compileTemplateNunjuckStrategy } from "./templateParser/adapters/NunjuckParser";
+import { compileTemplateWithNunjuck } from "./templateParser/adapters/NunjuckParser";
 import { Template } from "../types/Template";
 import { onError } from "../../infra/lib/utils/onError";
 import { CompileTemplateError } from "../../infra/http/responses/Error";
+import { setStrategy } from "../../infra/lib/utils/setStrategy";
+import { TemplateCompiler } from "../types/Template";
 
-var compileTemplateStrategy = compileTemplateFromClient(
-  compileTemplateNunjuckStrategy
+var compileTemplate = <TemplateCompiler>setStrategy(
+  compileTemplateWithNunjuck
 );
 
 export const renderTemplate = (templateName: string, data: object): Template =>
   onError(CompileTemplateError, () => {
     const templateContent = getTemplateFS(templateName);
-    return compileTemplateStrategy(templateContent, data);
+    return compileTemplate(templateContent, data);
   });
 
 export const renderProvidedTemplate = (
@@ -20,5 +22,5 @@ export const renderProvidedTemplate = (
   data: object
 ): Template =>
   onError(CompileTemplateError, () => {
-    compileTemplateStrategy(templateContent, data);
+    compileTemplate(templateContent, data);
   });
