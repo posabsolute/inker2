@@ -1,0 +1,50 @@
+{
+  "name": "inker2",
+  "version": "1.0.0",
+  "description": "A email service",
+  "main": "index.js",
+  "dependencies": {
+    "@sendgrid/mail": "^7.1.1",
+    "@types/compression": "^1.7.0",
+    "body-parser": "^1.19.0",
+    "class-transformer": "^0.2.3",
+    "class-validator": "^0.12.2",
+    "compression": "^1.7.4",
+    "concurrently": "^5.2.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-basic-auth": "^1.2.0",
+    "express-status-monitor": "^1.3.2",
+    "fp-ts": "^2.6.2",
+    "intl-messageformat": "^8.3.17",
+    "io-ts": "^2.2.4",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2",
+    "nodemon": "^2.0.3",
+    "nunjucks": "^3.2.1",
+    "nunjucks-intl": "^1.0.1",
+    "path": "^0.12.7",
+    "typedi": "^0.8.0",
+    "vm-nunjucks": "^0.2.0",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.0",
+    "@types/express": "^4.17.6",
+    "@types/express-status-monitor": "^1.2.0",
+    "@types/multer": "^1.4.3",
+    "@types/node": "^14.0.1",
+    "copyfiles": "^2.2.0",
+    "husky": "^4.2.5",
+    "prettier": "^2.0.5",
+    "pretty-quick": "^2.0.1"
+  },
+  "scripts": {
+    "start:build": "tsc -w",
+    "start:copyhtml": "copyfiles -u 1 src/**/*.html dist/",
+    "start:run": "nodemon dist/index.js",
+    "start": "concurrently npm:start:*"
+  },
+  "author": "",
+  "license": "ISC"
+}
