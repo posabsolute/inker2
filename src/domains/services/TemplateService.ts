@@ -7,9 +7,7 @@ import { CompileTemplateError } from "../../infra/http/responses/Error";
 import { setStrategy } from "../../infra/lib/utils/setStrategy";
 import { TemplateCompiler } from "../types/Template";
 
-var compileTemplate = <TemplateCompiler>setStrategy(
-  compileTemplateWithNunjuck
-);
+var compileTemplate = <TemplateCompiler>setStrategy(compileTemplateWithNunjuck);
 
 export const renderTemplate = (templateName: string, data: object): Template =>
   onError(CompileTemplateError, () => {
