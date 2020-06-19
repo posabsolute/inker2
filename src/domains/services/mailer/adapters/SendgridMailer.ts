@@ -1,12 +1,12 @@
 import SendgridMailer from "@sendgrid/mail";
 import { Mailer, EmailRequestContent, EmailClientResponse, EmailClientResponseStatus } from "../../../types/Email";
 import { logger } from "../../../../infra/lib/logger";
-import { HttpError } from "../../../../infra/http/responses/Error";
+import { HttpError, badRequest } from "../../../../infra/http/responses/Error";
 
 const parseResponse = (sendGridResp) => ({
     status: EmailClientResponseStatus.success,
     statusCode: 200,
-    message: "yes"
+    message: sendGridResp.message
 });
 
 export const SendgridMailerStrategy = async (emailRequest: EmailRequestContent) : Promise<EmailClientResponse> => {
@@ -14,10 +14,6 @@ export const SendgridMailerStrategy = async (emailRequest: EmailRequestContent) 
         .then(mailerResp => parseResponse(mailerResp))
         .catch(err => {
             logger.error(err)
-            const error: HttpError = {
-                httpCode: 400,
-                message: err.message
-            }
-            throw error;
+            throw badRequest(err.message);
         })
 };

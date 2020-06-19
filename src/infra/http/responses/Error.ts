@@ -18,5 +18,13 @@ export const ExternalEmailProviderError: HttpError = {
     message: "External Email Provider Error"
 };
 
+export const badRequest = (message) : HttpError => ({
+    httpCode: 400,
+    message: message
+});
+
+
+
+
 
 
