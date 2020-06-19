@@ -1,7 +1,7 @@
 import nunjucks from "vm-nunjucks";
 import { Template, TemplateCompiler } from "../../../types/Template";
 
-export const compileTemplateWithNunjuck: TemplateCompiler = (
+export const NunjuckCompiler: TemplateCompiler = (
   template: Template,
   data: object
 ): Template => {
