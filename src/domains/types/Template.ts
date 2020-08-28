@@ -13,3 +13,8 @@ const Template = t.brand(
 export type TemplateCompiler = (template: Template, data: Object) => Template;
 
 export type Template = t.TypeOf<typeof Template>
+
+export enum TemplateType {
+  text = "text",
+  html = "html"
+};

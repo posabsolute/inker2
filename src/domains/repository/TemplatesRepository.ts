@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-import { Template } from "../types/Template";
+import { Template, TemplateType } from "../types/Template";
 import { TemplateNotFound } from "../../infra/http/responses/Error";
 import { onUndefined } from "../../infra/lib/utils/onUndefined";
 import { logger } from "../../infra/lib/logger";
@@ -28,5 +28,5 @@ export const bootFStemplates = () => {
   });
 };
 
-export const getTemplateFS = (templateName: string): Template =>
-  onUndefined(TemplateNotFound, () => templates[templateName]);
+export const getTemplateFS = (templateName: string, type: TemplateType): Template =>
+  onUndefined(TemplateNotFound, () => templates[`${templateName}.${type}`]);

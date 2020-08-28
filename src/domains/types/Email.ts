@@ -1,15 +1,18 @@
+import { Template } from "./Template";
+
 export type EmailRequestContent = {
   to: string;
   from: string;
   subject: string;
   text: string;
-  html: string;
+  html: Template;
   data: object;
+  template: string | undefined;
 };
 
 export enum EmailClientResponseStatus {
-  success,
-  error,
+  success = "success",
+  error = "error",
 }
 
 export type EmailClientResponse = {

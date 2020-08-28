@@ -6,30 +6,23 @@ import {
     getOsEnv, getOsEnvOptional, getOsPath, getOsPaths, normalizePort, toBool, toNumber
 } from './infra/lib/env';
 
-dotenv.config({ path: path.join(process.cwd(), `.env${((process.env.NODE_ENV === 'test') ? '.test' : '')}`) });
-
+dotenv.config()
 
 /**
  * Environment variables
  */
-export const env = {
+const env = {
     node: process.env.NODE_ENV || 'development',
     isProduction: process.env.NODE_ENV === 'production',
     isTest: process.env.NODE_ENV === 'test',
     isDevelopment: process.env.NODE_ENV === 'development',
-    app: {
-        name: getOsEnv('APP_NAME'),
-        version: (pkg as any).version,
-        description: (pkg as any).description,
-        host: getOsEnv('APP_HOST'),
-        schema: getOsEnv('APP_SCHEMA'),
-        routePrefix: getOsEnv('APP_ROUTE_PREFIX'),
-        port: normalizePort(process.env.PORT || getOsEnv('APP_PORT')),
-        dirs: {
-            controllers: getOsPaths('CONTROLLERS'),
-            middlewares: getOsPaths('MIDDLEWARES')
-        },
-    },
+    name: getOsEnv('APP_NAME'),
+    emailServiceApiKey: getOsEnv('SENDGRID_KEY'),
+    version: (pkg as any).version,
+    description: (pkg as any).description,
+    host: getOsEnv('APP_HOST'),
+    port: normalizePort(process.env.PORT || getOsEnv('APP_PORT')),
+
     log: {
         level: getOsEnv('LOG_LEVEL'),
         json: toBool(getOsEnvOptional('LOG_JSON')),
@@ -42,3 +35,5 @@ export const env = {
         password: getOsEnv('MONITOR_PASSWORD')
     },
 };
+
+export default env;

@@ -2,8 +2,9 @@ import express from "express";
 import { Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
 
-import { renderTemplate } from "../../domains/services/TemplateService";
+import { renderInternalTemplate } from "../../domains/services/TemplateService";
 import { sendEmailWithClient } from "../../domains/services/EmailService";
+import { TemplateType } from "../../domains/types/Template";
 
 export const routes = express.Router();
 
@@ -16,10 +17,11 @@ const getTemplates = (
   next: NextFunction
 ): void => {
   const {
-    params: { id: templateName },
+    params: { id: templateName, type: type },
     body: templateVariables,
   } = req;
-  res.send(renderTemplate(templateName, templateVariables));
+  const templateType = TemplateType[type];
+  res.send(renderInternalTemplate(templateName, templateVariables, templateType));
 };
 
 const sendEmail = (
@@ -33,8 +35,6 @@ const sendEmail = (
     .catch(next);
 };
 
-const sendSMS = (req: Request, res: Response): void => {};
 
 routes.post("/api/templates/:id", getTemplates);
 routes.post("/api/send/email", sendEmail);
-routes.post("/api/send/sms", sendSMS);
